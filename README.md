@@ -2,6 +2,10 @@
 
 ## Queries for example.js
 
+```bash
+npx nodemon example.js
+```
+
 ```graphql
 mutation createUser {
   createUser(name: "Buchea")
@@ -18,6 +22,10 @@ query getUsers {
 ```
 
 ## Queries for exampleWithAuth.js
+
+```bash
+npx nodemon exampleWithAuth.js
+```
 
 ```graphql
 query getToken {
