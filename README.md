@@ -1,6 +1,10 @@
 # GraphQLess
 
-Write GraphQL like you would vanilla Express.js.
+REST and GraphQL really aren't that different.
+
+I'll prove it!
+
+With this library you can write your GraphQL server just like you would with Express.js.
 
 ## Setup
 
@@ -24,26 +28,35 @@ app.post('/createUser', (req, res) =>
   res.send(db.users.push({ name: req.body.name }))
 );
 
-// This is the only substantial difference
-// you need to write a schema that describes the
-// .get and .post functions inputs and outputs
-// .get === Query && .post === Mutation
-app.useSchema(`
-  type Query {
-    users: [User]
-    user(name: String): User
-  }
-  type Mutation {
-    createUser(name: String): Int
-  }
-  type User {
-    name: String
-  }
-`);
-
 app.listen(3000, () => {
   console.log('Visit: http://localhost:3000/playground');
 });
+```
+
+I know it looks like Express.js but the code above is a GraphQL server! There is one caveat though...
+
+We'll need to write a schema that describes the `.get` and `.post` functions inputs and outputs.
+Just know that `.get === Query && .post === Mutation`. Now let's modify the last few lines of the snippet above to include our schema:
+
+```jsx
+app
+  .useSchema(
+    `
+    type Query {
+      users: [User]
+      user(name: String): User
+    }
+    type Mutation {
+      createUser(name: String): Int
+    }
+    type User {
+      name: String
+    }
+  `
+  )
+  .listen(3000, () => {
+    console.log('Visit: http://localhost:3000/playground');
+  });
 ```
 
 You can find more examples in the [examples](/examples) folder.

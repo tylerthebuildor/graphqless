@@ -8,7 +8,8 @@ class App {
   constructor(config) {
     this.app = express();
     this.config = typeof config === 'function' ? config : () => config;
-    this.middlewares = [];
+    this.middlewares = (req, res, next) => next();
+    this.post = this.put = this.delete = this.patch = this.query = this.mutation = this.get;
     this.resolvers = {};
     this.schemas = [];
   }
@@ -16,21 +17,17 @@ class App {
   get(route, resolver) {
     const name = route.replace('/', '');
     if (this.resolvers[name]) {
-      throw Error('Cannot declare duplicate resolver names');
+      throw Error(`Cannot declare duplicate resolver name: ${name}`);
     }
-    this.resolvers[name] = async (args, context) =>
+    this.resolvers[name] = (args, context) =>
       new Promise(resolve =>
         resolver({ body: args, context }, { send: resolve })
       );
     return this;
   }
 
-  post(route, resolver) {
-    return this.get(route, resolver);
-  }
-
   use(func) {
-    this.middlewares.push(func);
+    this.middlewares = (req, res, next) => func(req, res, next);
     return this;
   }
 
@@ -46,15 +43,10 @@ class App {
       graphiql: true,
       ...this.config(req),
     }));
-
-    const appGraphQLWithMiddleware = this.middlewares.length
-      ? this.middlewares[0](appGraphQL)
-      : appGraphQL;
-    // const store = { dispatch: server => server() }
-    // this.middlewares.forEach(middleware => (dispatch = middleware(store)(dispatch)))
+    const rootMiddleware = (req, res) => this.middlewares(req, res, appGraphQL);
 
     this.app
-      .use('/graphql', appGraphQLWithMiddleware)
+      .use('/graphql', rootMiddleware)
       .get('/playground', expressPlayground.default({ endpoint: '/graphql' }))
       .listen(...args);
   }

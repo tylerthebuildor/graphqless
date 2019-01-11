@@ -6,7 +6,8 @@ const app = new graphQLess(req => ({ context: { userId: req.jwt } }));
 const JWT_SECRET = 'SHHH';
 const db = { users: [{ id: 'abc', name: 'Tyler' }] };
 
-app.use(next => (req, res) => {
+// This is our authentication middleware
+app.use((req, res, next) => {
   req.jwt = jwt.verify(
     req.headers.authorization.replace('Bearer ', ''),
     JWT_SECRET
