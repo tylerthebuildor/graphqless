@@ -1,7 +1,7 @@
-const graphQLess = require('./index.js');
+const graphQLess = require('../index.js');
+const app = new graphQLess();
 
 const db = { users: [{ name: 'Tyler' }] };
-const app = new graphQLess();
 
 app.get('/users', () => db.users);
 app.get('/user', ({ name }) => db.users.find(user => user.name === name));

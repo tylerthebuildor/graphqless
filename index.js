@@ -45,7 +45,9 @@ class App {
       ...this.config(req),
     }));
 
-    const appGraphQLWithMiddleware = this.middlewares[0](appGraphQL);
+    const appGraphQLWithMiddleware = this.middlewares.length
+      ? this.middlewares[0](appGraphQL)
+      : appGraphQL;
     // const store = { dispatch: server => server() }
     // this.middlewares.forEach(middleware => (dispatch = middleware(store)(dispatch)))
 
