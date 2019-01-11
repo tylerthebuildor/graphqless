@@ -14,13 +14,13 @@ app.use(next => (req, res) => {
   next(req, res);
 });
 
-// Hit this route first to get a token
+// Hit this route to get a token
 app.get('getToken', () => jwt.sign(db.users[0].id, JWT_SECRET));
 
-// Now we can access in our routes/resolvers
-// context is passed as the second argument
-app.get('/me', (data, context) =>
-  db.users.find(user => user.id === context.userId)
+// Now we can access in our route
+// context is passed inside req
+app.get('/me', (req, res) =>
+  res.send(db.users.find(user => user.id === req.context.userId))
 );
 
 app.useSchema(`

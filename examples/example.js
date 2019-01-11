@@ -3,9 +3,13 @@ const app = new graphQLess();
 
 const db = { users: [{ name: 'Tyler' }] };
 
-app.get('/users', () => db.users);
-app.get('/user', ({ name }) => db.users.find(user => user.name === name));
-app.post('/createUser', ({ name }) => db.users.push({ name }));
+app.get('/users', (req, res) => res.send(db.users));
+app.get('/user', (req, res) =>
+  res.send(db.users.find(user => user.name === req.body.name))
+);
+app.post('/createUser', (req, res) =>
+  res.send(db.users.push({ name: req.body.name }))
+);
 
 app.useSchema(`
   type Query {

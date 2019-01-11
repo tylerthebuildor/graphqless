@@ -18,23 +18,25 @@ class App {
     if (this.resolvers[name]) {
       throw Error('Cannot declare duplicate resolver names');
     }
-    this.resolvers[name] = resolver;
+    this.resolvers[name] = async (args, context) =>
+      new Promise(resolve =>
+        resolver({ body: args, context }, { send: resolve })
+      );
+    return this;
   }
 
   post(route, resolver) {
-    const name = route.replace('/', '');
-    if (this.resolvers[name]) {
-      throw Error('Cannot declare duplicate resolver names');
-    }
-    this.resolvers[name] = resolver;
+    return this.get(route, resolver);
   }
 
   use(func) {
     this.middlewares.push(func);
+    return this;
   }
 
   useSchema(schema) {
     this.schemas.push(schema);
+    return this;
   }
 
   listen(...args) {
