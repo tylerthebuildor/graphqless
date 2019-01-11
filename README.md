@@ -42,7 +42,7 @@ app.listen(3000, () => {
 
 I know it looks like Express.js but the code above is a GraphQL server! There is one caveat though...
 
-GraphQL requires us to write a schema that describes the `.get` and `.post` functions inputs and outputs.
+GraphQL requires us to write a schema that describes the `.get` and `.post` functions' inputs and outputs.
 Just know that `.get === Query && .post === Mutation`. Now let's modify the last few lines of the snippet above to include the required schema:
 
 ```jsx
