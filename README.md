@@ -4,7 +4,7 @@ REST and GraphQL really aren't that different.
 
 I'll prove it!
 
-With this library you can write your GraphQL server just like you would with Express.js.
+With this library you can write your GraphQL server almost exactly like you would with Express.js.
 
 ## Setup
 
