@@ -66,6 +66,8 @@ app
   });
 ```
 
+That's the only catch! You now have a fully functioning and extendable GraphQL server.
+
 You can find more examples in the [examples](/examples) folder.
 
 ## Queries for examples/example.js
