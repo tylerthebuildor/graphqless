@@ -1,0 +1,20 @@
+{
+  "name": "graphqless",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon example.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.0.2",
+    "graphql-playground-middleware-express": "^1.7.8",
+    "jsonwebtoken": "^8.4.0",
+    "merge-graphql-schemas": "^1.5.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
