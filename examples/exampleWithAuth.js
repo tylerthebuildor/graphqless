@@ -15,7 +15,9 @@ app.use(next => (req, res) => {
 });
 
 // Hit this route to get a token
-app.get('getToken', () => jwt.sign(db.users[0].id, JWT_SECRET));
+app.get('getToken', (req, res) =>
+  res.send(jwt.sign(db.users[0].id, JWT_SECRET))
+);
 
 // Now we can access in our route
 // context is passed inside req
