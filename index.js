@@ -43,7 +43,9 @@ class App {
       graphiql: true,
       ...this.config(req),
     }));
-    const rootMiddleware = (req, res) => this.middlewares(req, res, appGraphQL);
+
+    const rootMiddleware = (req, res, next) =>
+      this.middlewares(req, res, () => appGraphQL(req, res, next));
 
     this.app
       .use('/graphql', rootMiddleware)

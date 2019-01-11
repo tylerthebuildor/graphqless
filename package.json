@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
@@ -13,8 +16,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
-  },
-  "files": [
-    "index.js"
-  ]
+  }
 }

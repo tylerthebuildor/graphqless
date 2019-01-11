@@ -8,17 +8,16 @@ const db = { users: [{ id: 'abc', name: 'Tyler' }] };
 
 // This is our authentication middleware
 app.use((req, res, next) => {
-  req.jwt = jwt.verify(
-    req.headers.authorization.replace('Bearer ', ''),
-    JWT_SECRET
-  );
+  req.jwt = req.headers.authorization
+    ? jwt.verify(req.headers.authorization.replace('Bearer ', ''), JWT_SECRET)
+    : null;
   next(req, res);
 });
 
 // Hit this route to get a token
-app.get('getToken', (req, res) =>
-  res.send(jwt.sign(db.users[0].id, JWT_SECRET))
-);
+app.get('getToken', (req, res) => {
+  res.send(jwt.sign(db.users[0].id, JWT_SECRET));
+});
 
 // Now we can access in our route
 // context is passed inside req
