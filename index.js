@@ -1,7 +1,7 @@
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const { buildSchema } = require('graphql');
-const { mergeTypes, mergeResolvers } = require('merge-graphql-schemas');
+const { mergeTypes } = require('merge-graphql-schemas');
 const expressPlayground = require('graphql-playground-middleware-express');
 
 class App {

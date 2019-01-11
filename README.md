@@ -21,8 +21,8 @@ app.get('/user', ({ name }) => db.users.find(user => user.name === name));
 app.post('/createUser', ({ name }) => db.users.push({ name }));
 
 // This is the only substantial difference
-// you need ot write a schema that paris to the
-// .get and .post functions above
+// you need to write a schema that describes the
+// .get and .post functions inputs and outputs
 // .get === Query && .post === Mutation
 app.useSchema(`
   type Query {
