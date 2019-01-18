@@ -4,9 +4,15 @@ const { buildSchema } = require('graphql');
 const { mergeTypes } = require('merge-graphql-schemas');
 const expressPlayground = require('graphql-playground-middleware-express');
 
-class App {
+class GraphQLess {
+  static Router() {
+    const instance = new GraphQLess();
+    instance.listen = undefined;
+    return instance;
+  }
+
   constructor(config) {
-    this.app = express();
+    this.app = null;
     this.config = typeof config === 'function' ? config : () => config;
     this.middlewares = (req, res, next) => next();
     this.post = this.put = this.delete = this.patch = this.query = this.mutation = this.get;
@@ -27,7 +33,13 @@ class App {
   }
 
   use(func) {
-    this.middlewares = (req, res, next) => func(req, res, next);
+    if (func instanceof GraphQLess) {
+      this.middlewares = (req, res, next) => func.middlewares(req, res, next);
+      this.resolvers = { ...this.resolvers, ...func.resolvers };
+      this.schemas = [...this.schemas, ...func.schemas];
+    } else {
+      this.middlewares = (req, res, next) => func(req, res, next);
+    }
     return this;
   }
 
@@ -47,6 +59,7 @@ class App {
     const rootMiddleware = (req, res, next) =>
       this.middlewares(req, res, () => appGraphQL(req, res, next));
 
+    this.app = express();
     this.app
       .use('/graphql', rootMiddleware)
       .get('/playground', expressPlayground.default({ endpoint: '/graphql' }))
@@ -54,4 +67,4 @@ class App {
   }
 }
 
-module.exports = App;
+module.exports = GraphQLess;

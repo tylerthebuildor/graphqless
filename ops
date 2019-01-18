@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+# stop script on frist error
+
+# These commands take this form
+# ./ops [script] [option]
+
+script=${1}
+option=${2}
+if [ ! -z $script ] ; then shift ; fi
+if [ ! -z $option ] ; then shift ; fi
+rest="$@"
+
+if [ -z $script ] ; then
+  echo "please enter a command after ./ops"
+
+elif [ $script == "setup" ] ; then
+  yarn install
+  brew install nektos/tap/act
+
+elif [ $script == "setup-bash" ] ; then
+  yarn install
+  curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+
+elif [ $script == "test" ] ; then
+  if [ $option ] && [ $option != "--watchAll" ] ; then
+    yarn test "__tests__/$option-test.js" $rest
+  else
+    yarn test $option $rest
+  fi
+
+fi

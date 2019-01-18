@@ -4,8 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "CONTRIBUTING.md"
   ],
+  "scripts": {
+    "test": "node ./node_modules/jest/bin/jest.js"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
@@ -15,6 +19,7 @@
     "merge-graphql-schemas": "^1.5.8"
   },
   "devDependencies": {
+    "jest": "^23.6.0",
     "nodemon": "^1.18.9"
   }
 }

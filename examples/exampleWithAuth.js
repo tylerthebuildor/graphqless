@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const graphQLess = require('../index.js');
-const app = new graphQLess(req => ({ context: { userId: req.jwt } }));
+const GraphQLess = require('../index.js');
+const app = new GraphQLess(req => ({ context: { userId: req.jwt } }));
 
 const JWT_SECRET = 'SHHH';
 const db = { users: [{ id: 'abc', name: 'Tyler' }] };

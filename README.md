@@ -15,8 +15,8 @@ yarn install graphqless
 And here is how you write a server... Look familiar?
 
 ```jsx
-const graphQLess = require('graphqless');
-const app = new graphQLess();
+const GraphQLess = require('graphqless');
+const app = new GraphQLess();
 
 const db = { users: [{ name: 'Tyler' }] };
 
@@ -70,7 +70,7 @@ That's the only catch! You now have a fully functioning and extendable GraphQL s
 
 You can find more examples in the [examples](/examples) folder.
 
-## Queries for examples/example.js
+## Queries for examples/example
 
 ```bash
 npx nodemon examples/example.js
@@ -91,7 +91,7 @@ query getUsers {
 }
 ```
 
-## Queries for examples/exampleWithAuth.js
+## Queries for examples/exampleWithAuth
 
 ```bash
 npx nodemon examples/exampleWithAuth.js
@@ -105,6 +105,27 @@ query getMe {
   getToken
   me {
     id
+    name
+  }
+}
+```
+
+## Queries for examples/exampleWithRouter
+
+```bash
+npx nodemon examples/exampleWithRouter/index.js
+```
+
+```graphql
+mutation createUser {
+  createUser(name: "Buchea")
+}
+
+query getUsers {
+  users {
+    name
+  }
+  user(name: "Tyler") {
     name
   }
 }
