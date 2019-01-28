@@ -17,7 +17,7 @@
 ## Setup
 
 ```bash
-yarn install graphqless
+yarn add graphqless
 ```
 
 And here is how you write a server... Look familiar?
