@@ -139,14 +139,13 @@ npx nodemon examples/exampleWithReactClient/index.js
 
 ```graphql
 mutation createUser {
-  createUser(name: "Buchea")
+  createUser(name: "Buchea") {
+    name
+  }
 }
 
 query getUsers {
   users {
-    name
-  }
-  user(name: "Tyler") {
     name
   }
 }
