@@ -79,7 +79,7 @@ That's the only catch! You now have a fully functioning and extendable GraphQL s
 
 You can find more examples in the [examples](/examples) folder.
 
-## Exapmles
+## Examples
 
 ### Queries for examples/example
 
