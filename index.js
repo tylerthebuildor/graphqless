@@ -4,17 +4,9 @@ const { buildSchema } = require('graphql');
 const { mergeTypes } = require('merge-graphql-schemas');
 const expressPlayground = require('graphql-playground-middleware-express');
 
-class GraphQLess {
-  static Router() {
-    const instance = new GraphQLess();
-    instance.listen = undefined;
-    return instance;
-  }
-
-  constructor(config) {
-    this.app = null;
-    this.config = typeof config === 'function' ? config : () => config;
-    this.middlewares = (req, res, next) => next();
+class Router {
+  constructor() {
+    this.middlewares = [];
     this.post = this.put = this.delete = this.patch = this.query = this.mutation = this.get;
     this.resolvers = {};
     this.schemas = [];
@@ -33,12 +25,14 @@ class GraphQLess {
   }
 
   use(func) {
-    if (func instanceof GraphQLess) {
-      this.middlewares = (req, res, next) => func.middlewares(req, res, next);
+    if (func instanceof Router) {
+      this.middlewares = this.middlewares.concat(func.middlewares);
       this.resolvers = { ...this.resolvers, ...func.resolvers };
       this.schemas = [...this.schemas, ...func.schemas];
+    } else if (func instanceof Function) {
+      this.middlewares.push(func);
     } else {
-      this.middlewares = (req, res, next) => func(req, res, next);
+      throw Error('use() expects an instance of Function or Router');
     }
     return this;
   }
@@ -47,23 +41,53 @@ class GraphQLess {
     this.schemas.push(schema);
     return this;
   }
+}
 
-  listen(...args) {
-    const appGraphQL = expressGraphQL(req => ({
-      schema: buildSchema(mergeTypes(this.schemas, { all: true })),
+class GraphQLess extends Router {
+  static Router() {
+    const instance = new Router();
+    return instance;
+  }
+
+  constructor(config = {}, options = {}) {
+    super();
+    this.express = express();
+    this.expressGraphQL = null;
+    this.config = config instanceof Function ? config : () => config;
+    this.options = {
+      endpoint: '/graphql',
+      usePlayground: true,
+      mergeTypes: { all: true },
+      expressPlayground: { endpoint: '/graphql' },
+      ...options,
+    };
+  }
+
+  listen(...argsListen) {
+    this.expressGraphQL = expressGraphQL((req, res, next) => ({
+      schema: buildSchema(mergeTypes(this.schemas, this.options.mergeTypes)),
       rootValue: this.resolvers,
       graphiql: true,
-      ...this.config(req),
+      ...this.config(req, res, next, {
+        schemas: this.schemas,
+        resolvers: this.resolvers,
+      }),
     }));
 
-    const rootMiddleware = (req, res, next) =>
-      this.middlewares(req, res, () => appGraphQL(req, res, next));
+    this.middlewares.forEach(middleware => {
+      this.express.use(this.options.endpoint, middleware);
+    });
 
-    this.app = express();
-    this.app
-      .use('/graphql', rootMiddleware)
-      .get('/playground', expressPlayground.default({ endpoint: '/graphql' }))
-      .listen(...args);
+    if (this.options.usePlayground) {
+      this.express.get(
+        '/playground',
+        expressPlayground.default(this.options.expressPlayground)
+      );
+    }
+
+    this.express
+      .use(this.options.endpoint, this.expressGraphQL)
+      .listen(...argsListen);
   }
 }
 

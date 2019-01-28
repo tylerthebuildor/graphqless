@@ -130,3 +130,24 @@ query getUsers {
   }
 }
 ```
+
+## Queries for examples/exampleWithReactClient
+
+```bash
+npx nodemon examples/exampleWithReactClient/index.js
+```
+
+```graphql
+mutation createUser {
+  createUser(name: "Buchea")
+}
+
+query getUsers {
+  users {
+    name
+  }
+  user(name: "Tyler") {
+    name
+  }
+}
+```

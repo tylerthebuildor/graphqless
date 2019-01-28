@@ -11,7 +11,7 @@ app.use((req, res, next) => {
   req.jwt = req.headers.authorization
     ? jwt.verify(req.headers.authorization.replace('Bearer ', ''), JWT_SECRET)
     : null;
-  next(req, res);
+  next();
 });
 
 // Hit this route to get a token

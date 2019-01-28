@@ -1,0 +1,24 @@
+{
+  "name": "example-with-react-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "rm -rf dist && NODE_ENV=development parcel watch src/index.html --no-source-maps",
+    "build": "rm -rf dist && NODE_ENV=production parcel build src/index.html --no-source-maps --public-url /"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.1.27",
+    "graphql-tag": "^2.10.1",
+    "react": "^16.7.0",
+    "react-apollo": "^2.4.0",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "parcel-bundler": "^1.11.0"
+  }
+}
