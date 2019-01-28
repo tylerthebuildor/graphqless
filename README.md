@@ -79,7 +79,9 @@ That's the only catch! You now have a fully functioning and extendable GraphQL s
 
 You can find more examples in the [examples](/examples) folder.
 
-## Queries for examples/example
+## Exapmles
+
+### Queries for examples/example
 
 ```bash
 npx nodemon examples/example.js
@@ -100,7 +102,7 @@ query getUsers {
 }
 ```
 
-## Queries for examples/exampleWithAuth
+### Queries for examples/exampleWithAuth
 
 ```bash
 npx nodemon examples/exampleWithAuth.js
@@ -119,7 +121,7 @@ query getMe {
 }
 ```
 
-## Queries for examples/exampleWithRouter
+### Queries for examples/exampleWithRouter
 
 ```bash
 npx nodemon examples/exampleWithRouter/index.js
@@ -140,7 +142,7 @@ query getUsers {
 }
 ```
 
-## Queries for examples/exampleWithReactClient
+### Queries for examples/exampleWithReactClient
 
 ```bash
 npx nodemon examples/exampleWithReactClient/index.js
