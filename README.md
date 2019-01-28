@@ -1,10 +1,18 @@
-# GraphQLess
-
-REST and GraphQL really aren't that different.
-
-I'll prove it!
-
-GraphQLess is a thin wrapper around the official [express-graphql](https://github.com/graphql/express-graphql) project. GraphQLess let's you write your GraphQL server almost exactly like you would with Express.js.
+<p align="center">
+    <img alt="GraphQLess" src="examples/logo.png" width="60" />
+</p>
+<h1 align="center">
+  GraphQLess
+</h1>
+<h3 align="center">
+  ⚛️ 🚀🤘
+</h3>
+<p align="center">
+  <strong>REST and GraphQL really aren't that different. ll prove it!</strong><br>
+  GraphQLess is a thin wrapper around the official <a href="https://github.com/graphql/express-graphql">express-graphql</a> project.
+  <br />
+  GraphQLess let's you write your GraphQL server almost exactly like you would with Express.js.
+</p>
 
 ## Setup
 
