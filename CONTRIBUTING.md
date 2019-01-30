@@ -36,5 +36,5 @@ The `__tests__` folder provides good documentation of the inner workings of Grap
 - Write tests with nock and or graphql-request
 - Create Github action for building/releasing npm package and use Github package for local development of actions
 - Maybe add variable route resolution ie: `/users/:id` req.query.id or something??? Use pick to pull the route defined variables from the GraphQL input vars and place them in req.query then leave the rest in req.body
-- Throw error for any route with more than one name `/users` ok. `/users/:id` okay. `/users/:id/:name` okay. `/users/favorites` fail!
+- Throw error for any route with more than one name `/users` okay. `/users/:id` okay. `/users/:id/:name` okay. `/users/favorites` -> throw Error("Because routes map directly to resolvers they can only have a depth of 1")
 - Add something like this to the main README??? "The great thing about this library is that as you learn more about GraphQL and you want to use the official implementation it is very easy to remove the GraphQLess abstraction and use the raw `express-graphql` library. You could convert a sizeable project in a single morning."
