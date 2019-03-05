@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const GraphQLess = require('../index.js');
-const app = new GraphQLess(req => ({ context: { userId: req.jwt } }));
+const { GraphQLess } = require('../index.js');
+const app = new GraphQLess({ context: ({ req }) => ({ userId: req.jwt }) });
 
 const JWT_SECRET = 'SHHH';
 const db = { users: [{ id: 'abc', name: 'Tyler' }] };
@@ -21,9 +21,9 @@ app.get('getToken', (req, res) => {
 
 // Now we can access in our route
 // context is passed inside req
-app.get('/me', (req, res) =>
-  res.send(db.users.find(user => user.id === req.context.userId))
-);
+app.get('/me', (req, res) => {
+  res.send(db.users.find(user => user.id === req.context.userId));
+});
 
 app.useSchema(`
   type Query {
@@ -37,5 +37,5 @@ app.useSchema(`
 `);
 
 app.listen(3000, () => {
-  console.log('Visit: http://localhost:3000/playground');
+  console.log('Visit: http://localhost:3000/graphql');
 });

@@ -11,15 +11,14 @@
     "test": "node ./node_modules/jest/bin/jest.js"
   },
   "dependencies": {
+    "apollo-server-express": "^2.4.8",
     "express": "^4.16.4",
-    "express-graphql": "^0.7.1",
     "graphql": "^14.0.2",
-    "graphql-playground-middleware-express": "^1.7.8",
-    "jsonwebtoken": "^8.4.0",
     "merge-graphql-schemas": "^1.5.8"
   },
   "devDependencies": {
     "jest": "^23.6.0",
+    "jsonwebtoken": "^8.5.0",
     "nodemon": "^1.18.9"
   }
 }

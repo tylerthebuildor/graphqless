@@ -8,7 +8,9 @@
     "build": "rm -rf dist && NODE_ENV=production parcel build src/index.html --no-source-maps --public-url /"
   },
   "dependencies": {
-    "apollo-boost": "^0.1.27",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-http": "^1.5.11",
     "graphql-tag": "^2.10.1",
     "react": "^16.7.0",
     "react-apollo": "^2.4.0",

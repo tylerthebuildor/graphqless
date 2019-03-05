@@ -1,39 +1,55 @@
+const { mergeResolvers, mergeTypes } = require('merge-graphql-schemas');
+const ApolloServerExpress = require('apollo-server-express');
 const express = require('express');
-const expressGraphQL = require('express-graphql');
-const { buildSchema } = require('graphql');
-const { mergeTypes } = require('merge-graphql-schemas');
-const expressPlayground = require('graphql-playground-middleware-express');
+
+const { ApolloServer, gql } = ApolloServerExpress;
 
 class Router {
   constructor() {
+    this.delete = this.patch = this.post = this.put = this.mutation;
+    this.get = this.query;
     this.middlewares = [];
-    this.post = this.put = this.delete = this.patch = this.query = this.mutation = this.get;
     this.resolvers = {};
     this.schemas = [];
-  }
-
-  get(route, resolver) {
-    const name = route.replace('/', '');
-    if (this.resolvers[name]) {
-      throw Error(`Cannot declare duplicate resolver name: ${name}`);
-    }
-    this.resolvers[name] = (args, context) =>
-      new Promise(resolve =>
-        resolver({ body: args, context }, { send: resolve })
-      );
-    return this;
   }
 
   use(func) {
     if (func instanceof Router) {
       this.middlewares = this.middlewares.concat(func.middlewares);
-      this.resolvers = { ...this.resolvers, ...func.resolvers };
+      this.resolvers = mergeResolvers([this.resolvers, func.resolvers]);
       this.schemas = [...this.schemas, ...func.schemas];
     } else if (func instanceof Function) {
       this.middlewares.push(func);
     } else {
       throw Error('use() expects an instance of Function or Router');
     }
+    return this;
+  }
+
+  query(route, resolver) {
+    if (!this.resolvers.Query) this.resolvers.Query = {};
+    return this.useResolver(route, resolver, 'Query');
+  }
+
+  mutation(route, resolver) {
+    if (!this.resolvers.Mutation) this.resolvers.Mutation = {};
+    return this.useResolver(route, resolver, 'Mutation');
+  }
+
+  subscription(route, resolver) {
+    if (!this.resolvers.Subscription) this.resolvers.Subscription = {};
+    return this.useResolver(route, resolver, 'Subscription');
+  }
+
+  useResolver(route, resolver, type) {
+    const name = route.replace('/', '');
+    if (this.resolvers[type][name]) {
+      throw Error(`Cannot declare duplicate resolver name: ${name}`);
+    }
+    this.resolvers[type][name] = (parent, args, context, info) =>
+      new Promise(resolve =>
+        resolver({ body: args, context }, { send: resolve })
+      );
     return this;
   }
 
@@ -52,43 +68,35 @@ class GraphQLess extends Router {
   constructor(config = {}, options = {}) {
     super();
     this.express = express();
-    this.expressGraphQL = null;
-    this.config = config instanceof Function ? config : () => config;
+    this.config = config;
     this.options = {
       endpoint: '/graphql',
-      usePlayground: true,
+      playground: true,
       mergeTypes: { all: true },
-      expressPlayground: { endpoint: '/graphql' },
       ...options,
     };
   }
 
   listen(...argsListen) {
-    this.expressGraphQL = expressGraphQL((req, res, next) => ({
-      schema: buildSchema(mergeTypes(this.schemas, this.options.mergeTypes)),
-      rootValue: this.resolvers,
-      graphiql: true,
-      ...this.config(req, res, next, {
-        schemas: this.schemas,
-        resolvers: this.resolvers,
-      }),
-    }));
+    const server = new ApolloServer({
+      typeDefs: gql(mergeTypes(this.schemas, this.options.mergeTypes)),
+      resolvers: this.resolvers,
+      playground: this.options.playground,
+      ...this.config,
+    });
 
     this.middlewares.forEach(middleware => {
       this.express.use(this.options.endpoint, middleware);
     });
 
-    if (this.options.usePlayground) {
-      this.express.get(
-        '/playground',
-        expressPlayground.default(this.options.expressPlayground)
-      );
-    }
-
-    this.express
-      .use(this.options.endpoint, this.expressGraphQL)
-      .listen(...argsListen);
+    server.applyMiddleware({ app: this.express, path: this.options.endpoint });
+    this.express.listen(...argsListen);
   }
 }
 
-module.exports = GraphQLess;
+module.exports = {
+  GraphQLess,
+  Router,
+  ApolloServerExpress,
+  express,
+};
