@@ -1,4 +1,4 @@
-const GraphQLess = require('../index.js');
+const { GraphQLess } = require('../index.js');
 const app = new GraphQLess();
 
 const db = { users: [{ name: 'Tyler' }] };
@@ -32,5 +32,5 @@ app.useSchema(`
 `);
 
 app.listen(3000, () => {
-  console.log('Visit: http://localhost:3000/playground');
+  console.log('Visit: http://localhost:3000/graphql');
 });

@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider, Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const client = new ApolloClient({ uri: 'http://localhost:3000/graphql' });
 const CREATE_USER = gql(`
   mutation createUser($name: String) {
     createUser(name: $name) {
@@ -12,6 +13,7 @@ const CREATE_USER = gql(`
     }
   }
 `);
+
 const GET_USERS = gql(`
   query getUsers {
     users {
@@ -66,6 +68,11 @@ class UserList extends React.Component {
     return <Query query={GET_USERS}>{this.renderContent}</Query>;
   }
 }
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({ uri: 'http://localhost:3000/graphql' }),
+});
 
 ReactDOM.render(
   <ApolloProvider client={client}>

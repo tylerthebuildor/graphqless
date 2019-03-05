@@ -23,7 +23,7 @@ yarn add graphqless
 And here is how you write a server... Look familiar?
 
 ```jsx
-const GraphQLess = require('graphqless');
+const { GraphQLess } = require('graphqless');
 const app = new GraphQLess();
 
 const db = { users: [{ name: 'Tyler' }] };
@@ -159,5 +159,21 @@ query getUsers {
   users {
     name
   }
+}
+```
+
+### Queries for examples/exampleWithSubscription
+
+```bash
+npx nodemon examples/exampleWithSubscription.js
+```
+
+```graphql
+subscription subscribeToCount {
+  count
+}
+
+query getDummyData {
+  dummy
 }
 ```

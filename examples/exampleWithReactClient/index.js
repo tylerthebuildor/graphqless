@@ -1,5 +1,4 @@
-const express = require('express');
-const GraphQLess = require('../../index.js');
+const { GraphQLess, express } = require('../../index.js');
 const app = new GraphQLess();
 
 const db = {
@@ -32,5 +31,5 @@ app.useSchema(`
 app.express.use('/', express.static(__dirname + '/dist'));
 app.listen(3000, () => {
   console.log('Visit: http://localhost:3000/ for React.js front-end');
-  console.log('Visit: http://localhost:3000/playground for GraphQLPlayground');
+  console.log('Visit: http://localhost:3000/graphql for GraphQLPlayground');
 });

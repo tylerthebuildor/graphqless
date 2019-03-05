@@ -1,4 +1,4 @@
-const GraphQLess = require('../index.js');
+const { GraphQLess } = require('../index.js');
 
 describe('Router()', () => {
   it('Router variables are not static and should not be shared between routers', () => {
@@ -47,6 +47,7 @@ describe('use()', () => {
     router.delete('/delete', () => {});
     router.query('/query', () => {});
     router.mutation('/mutation', () => {});
+    router.subscription('/mutation', () => {});
 
     router.useSchema('test');
     router.useSchema('test2');
@@ -56,7 +57,13 @@ describe('use()', () => {
 
     app.use(router);
     expect(app.middlewares.length).toEqual(2);
-    expect(Object.keys(app.resolvers).length).toBe(6);
+    expect(
+      Object.keys({
+        ...app.resolvers.Query,
+        ...app.resolvers.Mutation,
+        ...app.resolvers.Subscription,
+      }).length
+    ).toBe(6);
     expect(app.schemas.length).toBe(2);
   });
 

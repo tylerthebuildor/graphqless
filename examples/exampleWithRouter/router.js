@@ -1,5 +1,5 @@
-const GraphQLess = require('../../index.js');
-const router = GraphQLess.Router();
+const { Router } = require('../../index.js');
+const router = new Router();
 
 const db = { users: [{ name: 'Tyler' }] };
 
