@@ -10,6 +10,8 @@ Checkout the `examples` folder to get started:
 npx nodemon examples/example.js
 npx nodemon examples/exampleWithAuth.js
 npx nodemon examples/exampleWithRouter/index.js
+npx nodemon examples/exampleWithReactClient/index.js
+npx nodemon examples/exampleWithSubscription.js
 ```
 
 The `__tests__` folder provides good documentation of the inner workings of GraphQLess:
