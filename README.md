@@ -177,3 +177,23 @@ query getDummyData {
   dummy
 }
 ```
+
+### Queries for examples/exampleWithRelations
+
+```bash
+npx nodemon examples/exampleWithRelations.js
+```
+
+```graphql
+query getDeepRelations {
+  users {
+    name
+    favorites {
+      name
+      users {
+        name
+      }
+    }
+  }
+}
+```
