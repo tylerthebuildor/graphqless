@@ -1,9 +1,9 @@
-const { GraphQLess } = require('../index.js');
+const { GraphQLess, Router } = require('../index.js');
 
 describe('Router()', () => {
   it('Router variables are not static and should not be shared between routers', () => {
-    const router1 = GraphQLess.Router();
-    const router2 = GraphQLess.Router();
+    const router1 = new Router();
+    const router2 = new Router();
 
     router1.useSchema('a dog');
     router2.useSchema('a cat');
@@ -17,7 +17,7 @@ describe('Router()', () => {
 describe('use()', () => {
   it('should only accept an instance of Function or Router', () => {
     const app = new GraphQLess();
-    const router = GraphQLess.Router();
+    const router = new Router();
 
     expect(app.use(() => {})).toEqual(app);
     expect(app.use(router)).toEqual(app);
@@ -39,7 +39,7 @@ describe('use()', () => {
 
   it('should merge class variables if input is a GraphQLess instance', () => {
     const app = new GraphQLess();
-    const router = GraphQLess.Router();
+    const router = new Router();
 
     router.get('/get', () => {});
     router.post('/post', () => {});
@@ -69,7 +69,7 @@ describe('use()', () => {
 
   it('should correctly chain Router middlewares to existing app middleswares', () => {
     const app = new GraphQLess();
-    const router = GraphQLess.Router();
+    const router = new Router();
 
     router.use(() => 'router middleware');
     app.use(router);
