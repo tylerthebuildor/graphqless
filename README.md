@@ -9,7 +9,7 @@
 </h3>
 <p align="center">
   <strong>REST and GraphQL really aren't that different. I'll prove it!</strong><br>
-  GraphQLess is a thin wrapper around the official <a href="https://github.com/graphql/express-graphql">express-graphql</a> project.
+  GraphQLess is a thin wrapper around the official <a href="https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express">apollo-server-express</a> project.
   <br />
   GraphQLess lets you write a GraphQL server in an Express.js style.
 </p>
