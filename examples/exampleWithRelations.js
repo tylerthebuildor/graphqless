@@ -46,10 +46,12 @@ app.useSchema(`
     favorites: [Favorite]
   }
   type User {
+    id: ID!
     name: String
     favorites: [Favorite]
   }
   type Favorite {
+    id: ID!
     name: String
     user: User
   }

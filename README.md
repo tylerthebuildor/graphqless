@@ -190,7 +190,7 @@ query getDeepRelations {
     name
     favorites {
       name
-      users {
+      user {
         name
       }
     }
