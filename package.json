@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "jest": "^24.3.1",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.18.10"
   }
 }
