@@ -13,7 +13,7 @@
   "dependencies": {
     "apollo-server-express": "^2.4.8",
     "express": "^4.16.4",
-    "graphql": "^14.1.1",
+    "graphql": "^14.4.1",
     "merge-graphql-schemas": "^1.5.8"
   },
   "devDependencies": {
