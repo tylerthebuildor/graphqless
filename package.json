@@ -17,7 +17,7 @@
     "merge-graphql-schemas": "^1.5.8"
   },
   "devDependencies": {
-    "jest": "^24.3.1",
+    "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.0",
     "nodemon": "^1.18.10"
   }
