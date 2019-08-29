@@ -1983,10 +1983,10 @@ graphql-upload@^8.0.2:
     http-errors "^1.7.1"
     object-path "^0.11.4"
 
-graphql@^14.1.1:
-  version "14.1.1"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.1.1.tgz#d5d77df4b19ef41538d7215d1e7a28834619fac0"
-  integrity sha512-C5zDzLqvfPAgTtP8AUPIt9keDabrdRAqSWjj2OPRKrKxI9Fb65I36s1uCs1UUBFnSWTdO7hyHi7z1ZbwKMKF6Q==
+graphql@^14.5.4:
+  version "14.5.4"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.4.tgz#b33fe957854e90c10d4c07c7d26b6c8e9f159a13"
+  integrity sha512-dPLvHoxy5m9FrkqWczPPRnH0X80CyvRE6e7Fa5AWEqEAzg9LpxHvKh24po/482E6VWHigOkAmb4xCp6P9yT9gw==
   dependencies:
     iterall "^1.2.2"
 
